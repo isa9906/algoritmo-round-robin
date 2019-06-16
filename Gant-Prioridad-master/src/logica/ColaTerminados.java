@@ -17,9 +17,10 @@ public class ColaTerminados {
     int tam=0;
     int contador=0;
     public ColaTerminados() {
-        cabecera=new Nodo (0,0,0,0,0,0,0,0,0,cabecera);
+        cabecera=new Nodo (0,0,0,0,0,0,0,0,0,0,0,cabecera);
         primero=cabecera;
         ultimo=cabecera;
+       
         
         tam=0;
     }
@@ -29,8 +30,8 @@ public class ColaTerminados {
     public int size (){
         return tam;
     }
-    public Nodo enqueue (int nombre,int tllegada,int trafaga,int tprioridad){
-        Nodo aux = new Nodo(nombre,tllegada,trafaga,tprioridad,0,0,0,0, (int) (Math.random() * 1),cabecera);
+    public Nodo enqueue (double nombre,int tllegada,int trafaga,int tprioridad, int tAlterno,int acumraf){
+        Nodo aux = new Nodo(nombre,tllegada,trafaga,tprioridad,0,0,0,0, (int) (Math.random() * 1),tAlterno,acumraf,cabecera);
         if (estaVacia()){
            primero=aux;
            cabecera.setSiguiente(primero);
@@ -46,8 +47,7 @@ public class ColaTerminados {
            if(auxiliarcomienzo<aux.getTllegada()){
                aux.setTcomienzo(aux.getTllegada());
            }
-           else{
-               
+           else{   
                aux.setTcomienzo(auxiliarcomienzo);
            }
            
@@ -62,13 +62,20 @@ public class ColaTerminados {
         if (!estaVacia()){
             
             Nodo aux2=primero;
-            aux2.setTfinal(aux2.getTcomienzo()+aux2.getTrafaga());
+            if (aux2.getTrafaga()>4){
+              aux2.setTfinal(aux2.getTcomienzo()+4);
+              
+            }
+            else{
+              aux2.setTfinal(aux2.getTcomienzo()+aux2.getTrafaga());
+            }
             aux2.setTretorno(aux2.getTfinal()-aux2.getTllegada());
-            aux2.setTespera(aux2.getTretorno()-aux2.getTrafaga());
+            aux2.setTespera(aux2.getTretorno()-aux2.getAcumrafaga());
             Nodo aux=primero.getSiguiente();
             primero=aux;
             auxiliarcomienzo=aux2.getTfinal();
             tam--;
+            //grafica.enqueue(aux2.getNombre(),aux2.getTcomienzo()+1,aux2.getTfinal(),aux2.getTllegadaAlterno()+1,aux2.getTcomienzo());
             return aux2;
         }
         else{

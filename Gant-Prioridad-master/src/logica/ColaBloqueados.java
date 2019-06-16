@@ -20,7 +20,7 @@ public class ColaBloqueados {
     
     public ColaBloqueados(ColaListos listos) {
         this.listos=listos;
-        cabecera=new Nodo (0,0,0,0,0,0,0,0,0,cabecera);
+        cabecera=new Nodo (0,0,0,0,0,0,0,0,0,0,0,cabecera);
         primero=cabecera;
         ultimo=cabecera;
         tam=0;
@@ -31,8 +31,8 @@ public class ColaBloqueados {
     public int size (){
         return tam;
     }
-    public Nodo enqueue (int nombre,int tllegada,int trafaga,int prioridad){
-        Nodo aux = new Nodo(nombre,tllegada,trafaga,prioridad,0,0,0,0,0,cabecera);
+    public Nodo enqueue (double nombre,int tllegada,int trafaga,int prioridad,int talterno,int acumraf){
+        Nodo aux = new Nodo(nombre,tllegada,trafaga,prioridad,0,0,0,0,0,talterno,acumraf,cabecera);
         if (estaVacia()){
            primero=aux;
            cabecera.setSiguiente(primero);
@@ -47,7 +47,7 @@ public class ColaBloqueados {
    public Nodo dequeue(){
         if (!estaVacia()){
              Nodo aux2=primero;
-            listos.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad());
+            listos.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad(),aux2.getTllegadaAlterno(),aux2.getAcumrafaga());
             Nodo aux=primero.getSiguiente();
             primero=aux;
             primero.setTcomienzo(aux2.getTfinal());

@@ -18,6 +18,7 @@ import logica.ColaListos;
 import logica.ColaTerminados;
 import logica.Nodo;
 
+
 /**
  *
  * @author Victoria
@@ -26,6 +27,7 @@ public class Vista extends javax.swing.JFrame {
 
     ColaTerminados terminados;
     ColaListos listos;
+    
     static int tiemposespera = 1;
     String cadena="";
     
@@ -184,7 +186,7 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public Vista() {
-
+        
         this.terminados = new ColaTerminados();
         this.listos = new ColaListos(terminados);
 
@@ -270,7 +272,8 @@ public class Vista extends javax.swing.JFrame {
                 System.out.println(cadena);
                 if (!terminados.estaVacia()) {
                     Nodo aux = terminados.dequeue();
-                    modelo.addRow(new Object[]{aux.getNombre(), aux.getTllegada(), aux.getTrafaga(), aux.getPrioridad(), aux.getTcomienzo(),
+                    
+                    modelo.addRow(new Object[]{aux.getNombre(), aux.getTllegadaAlterno(), aux.getTrafaga(), aux.getPrioridad(), aux.getTcomienzo(),
                         aux.getTfinal(), aux.getTretorno(), aux.getTespera()});
                     DefaultTableModel modelo3 = (DefaultTableModel) jTable3.getModel();
                     modelo3.addRow(new Object[]{});
@@ -278,12 +281,12 @@ public class Vista extends javax.swing.JFrame {
                     int inicio = aux.getTcomienzo() + 1;
                     int termina = aux.getTfinal();
                     int i;
-                    int iespera = aux.getTllegada() + 1;
+                    int iespera = aux.getTllegadaAlterno() + 1;
                     int fespera = aux.getTcomienzo();
-                    for (i = iespera; i <= fespera; i++) {
+                    for (i =iespera; i <= fespera; i++) {
                         jTable3.setValueAt("E", numFila, i);
                     }
-                    for (i = inicio; i <= termina; i++) {
+                    for (i = inicio; i <=termina; i++) {
                         jTable3.setValueAt("X", numFila, i);
                     }
                     jTable3.setDefaultRenderer(Object.class, new CambiarColor());

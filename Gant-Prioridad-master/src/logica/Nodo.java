@@ -5,7 +5,7 @@ package logica;
  * @author Isabel Pérez
  */
 public class Nodo {
-    private int nombre;
+    private double nombre;
     private int tllegada;
     private int trafaga;
     private int tcomienzo;
@@ -14,9 +14,11 @@ public class Nodo {
     private int tespera;
     private int prioridad;
     private int estado;
+    private int tllegadaAlterno;
+    private int acumrafaga;
     private Nodo siguiente; 
     
-    public Nodo (int nombre,int tllegada,int trafaga,int prioridad, int tcomienzo,int tfinal,int tretorno,int tespera,int estado, Nodo siguiente){
+    public Nodo (double nombre,int tllegada,int trafaga,int prioridad, int tcomienzo,int tfinal,int tretorno,int tespera,int estado,int tllegadaAlterno, int acumrafaga, Nodo siguiente){
       this.nombre=nombre;
       this.tllegada=tllegada;
       this.trafaga=trafaga;
@@ -27,6 +29,8 @@ public class Nodo {
       this.tespera=tespera;
       this.estado=estado;
       this.siguiente=siguiente;
+      this.acumrafaga=acumrafaga;
+      this.tllegadaAlterno=tllegadaAlterno;
     }
 
     public int getPrioridad() {
@@ -45,7 +49,7 @@ public class Nodo {
         this.estado = estado;
     }
     
-    public int getNombre() {
+    public double getNombre() {
         return nombre;
     }
 
@@ -108,4 +112,21 @@ public class Nodo {
     public void setSiguiente(Nodo siguiente) {
         this.siguiente = siguiente;
     }
+
+    public int getTllegadaAlterno() {
+        return tllegadaAlterno;
+    }
+
+    public void setTllegadaAlterno(int tllegadaAlterno) {
+        this.tllegadaAlterno = tllegadaAlterno;
+    }
+
+    public int getAcumrafaga() {
+        return acumrafaga;
+    }
+
+    public void setAcumrafaga(int acumrafaga) {
+        this.acumrafaga = acumrafaga;
+    }
+    
 }

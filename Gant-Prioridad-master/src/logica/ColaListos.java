@@ -20,7 +20,7 @@ public class ColaListos {
     
     public ColaListos(ColaTerminados terminados) {
         bloqueados=new ColaBloqueados(this);
-        cabecera=new Nodo (0,0,0,100000,0,0,0,0,0,cabecera);
+        cabecera=new Nodo (0,0,0,100000,0,0,0,0,0,0,0,cabecera);
         this.terminados=terminados;
         primero=cabecera;
         ultimo=cabecera;
@@ -32,8 +32,10 @@ public class ColaListos {
     public int size (){
         return tam;
     }
-    public Nodo enqueue (int nombre,int tllegada,int trafaga,int tprioridad){
-        Nodo aux = new Nodo(nombre,tllegada,trafaga,tprioridad,0,0,0,0, (int) (Math.random() * 2+1),cabecera);
+
+     public Nodo enqueue (double nombre,int tllegada,int trafaga,int tprioridad,int tllegadaAlterno,int acumraf){
+        Nodo aux = new Nodo(nombre,tllegada,trafaga,tprioridad,0,0,0,0, (int) (Math.random() * 2+1),tllegadaAlterno,acumraf,cabecera);
+       
         if (estaVacia()){
            primero=aux;
            cabecera.setSiguiente(primero);
@@ -46,7 +48,7 @@ public class ColaListos {
        return aux;
     } 
      public Nodo enqueue (int nombre,int tllegada){
-        Nodo aux = new Nodo(nombre,tllegada,(int)(Math.random()*8+1),(int)(Math.random()*8+1),0,0,0,0,(int)(Math.random()*2+1),cabecera);
+        Nodo aux = new Nodo(nombre,tllegada,(int)(Math.random()*10+5),(int)(Math.random()*8+1),0,0,0,0,(int)(Math.random()*2+1),tllegada,0,cabecera);
         if (estaVacia()){
            primero=aux;
            cabecera.setSiguiente(primero);
@@ -64,17 +66,28 @@ public class ColaListos {
             Nodo aux=primero.getSiguiente();
             primero=aux;
             tam--;
-            if (aux2.getEstado()==2){
-                bloqueados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad());
+            if (aux2.getTrafaga()>4){
+              aux2.setTfinal(aux2.getTcomienzo()+4);
+              
             }
             else{
-               
-                if(aux2.getTrafaga()>cuantum){
-                    terminados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad());
-                    this.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga()-cuantum,aux2.getPrioridad());
-                }
-                     terminados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad());
+              aux2.setTfinal(aux2.getTcomienzo()+aux2.getTrafaga());
             }
+            //if (aux2.getEstado()==2){
+               //bloqueados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad(),aux2.getTllegadaAlterno(),aux2.getAcumrafaga());
+            //}
+            //else{
+                if(aux2.getTrafaga()>cuantum){
+                    aux2.setAcumrafaga(aux2.getAcumrafaga()+4);
+                    terminados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad(),aux2.getTllegadaAlterno(),aux2.getAcumrafaga());
+                    bloqueados.enqueue(aux2.getNombre()+0.1,aux2.getTllegada(),aux2.getTrafaga()-cuantum,aux2.getPrioridad(),aux2.getTfinal(),aux2.getAcumrafaga());
+                    //this.enqueue(aux2.getNombre()+0.1,aux2.getTllegada(),aux2.getTrafaga()-cuantum,aux2.getPrioridad(),aux2.getTfinal(),aux2.getAcumrafaga());
+                }else{
+                     terminados.enqueue(aux2.getNombre(),aux2.getTllegada(),aux2.getTrafaga(),aux2.getPrioridad(),aux2.getTllegadaAlterno(),aux2.getAcumrafaga()+aux2.getTrafaga());
+                }
+                aux.setTcomienzo(aux2.getTfinal());
+            //}
+            
             return aux2;
         }
         else{
